@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hù Ma</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Ngăn chặn cuộn màn hình khi ảnh ma hiển thị */
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-size: 20px;
+            cursor: pointer; /* Gợi ý người dùng nhấp vào */
+        }
+
+        #ghost {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url('https://genk.mediacdn.vn/2019/1/26/photo-1-15484748487251000468362.jpg') no-repeat center center;
+            background-size: cover;
+            display: none; /* Ẩn ma khi trang load */
+            z-index: 1000; /* Đảm bảo ma phủ toàn màn hình */
+        }
+
+        #startText {
+            position: absolute;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div id="startText">Nhấn vào màn hình để tiếp tục...</div>
+    <div id="ghost"></div>
+    <audio id="screamSound" src="C:\Users\ADMIN\Downloads\20250401-1259-08.6061438.mp3    "></audio> <!-- Đảm bảo đường dẫn đúng -->
+
+    <script>
+        let ghost = document.getElementById('ghost');
+        let screamSound = document.getElementById('screamSound');
+        let startText = document.getElementById('startText');
+
+        document.body.addEventListener('click', function() {
+            // Ẩn hướng dẫn nhấn vào màn hình
+            startText.style.display = 'none';
+
+            // Hiển thị ảnh ma
+            ghost.style.display = 'block';
+
+            // Phát âm thanh
+            screamSound.play().catch(error => {
+                console.log("Không thể phát âm thanh:", error);
+            });
+
+            // Sau 3 giây, ẩn ảnh ma và âm thanh
+            setTimeout(() => {
+                ghost.style.display = 'none';
+                screamSound.pause();
+                screamSound.currentTime = 0;
+            }, 3000);
+        }, { once: true }); // Chỉ kích hoạt một lần
+    </script>
+</body>
+</html>
